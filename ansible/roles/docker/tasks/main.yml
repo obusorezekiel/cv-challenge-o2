@@ -1,0 +1,51 @@
+---
+# roles/docker/tasks/main.yml
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+    state: present
+
+- name: Update apt and install docker-ce
+  apt:
+    name: 
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+    state: present
+    update_cache: yes
+
+- name: Ensure Docker service is started and enabled
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Install Python Docker SDK
+  ansible.builtin.pip:
+    name: docker
+    state: present
+  become: true
+
+- name: Create shared Docker network
+  docker_network:
+    name: shared_network
+    driver: bridge
+    state: present
+
+- name: Copy postgres password secret
+  copy:
+    content: "{{ postgres_password }}"
+    dest: /opt/devops-project/POSTGRES_PASSWORD.txt
+    mode: '0600'
+
+- name: Ensure Docker Compose configuration directory exists
+  file:
+    path: /opt/devops-project/docker-compose
+    state: directory
+    mode: '0755'
