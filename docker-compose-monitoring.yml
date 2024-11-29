@@ -11,7 +11,7 @@ services:
     volumes:
       - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
-      - shared-network
+      - shared_network
     depends_on:
       - cadvisor
     labels:
@@ -55,7 +55,7 @@ services:
     volumes:
       - grafana:/var/lib/grafana
     networks:
-      - shared-network
+      - shared_network
     depends_on:
       - loki
       
@@ -69,7 +69,7 @@ services:
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
     networks:
-      - shared-network
+      - shared_network
     depends_on:
       - backend
       - frontend
@@ -82,14 +82,14 @@ services:
     ports:
       - 3100:3100
     networks:
-      - shared-network
+      - shared_network
     volumes:
       - ./monitoring/loki-config.yml:/etc/loki/loki-config.yaml
 
   promtail:
     image: grafana/promtail:latest
     networks:
-      - shared-network
+      - shared_network
     volumes:
       - ./monitoring/promtail-config.yml:/etc/promtail/promtail-config.yaml
     depends_on:
