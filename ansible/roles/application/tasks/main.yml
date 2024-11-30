@@ -9,11 +9,11 @@
     dest: "{{ project_root }}/docker-compose.yml"
 
 - name: Pull Docker images
-  docker_compose:
-    project_src: "{{ project_root }}"
-    pull: yes
+  ansible.builtin.command:
+    cmd: docker-compose pull
+    chdir: "{{ project_root }}"
 
 - name: Start application services
-  docker_compose:
-    project_src: "{{ project_root }}"
-    state: present
+  ansible.builtin.command:
+    cmd: docker-compose up -d
+    chdir: "{{ project_root }}"

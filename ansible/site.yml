@@ -7,4 +7,6 @@
     project_root: /opt/devops_project
   roles:
     - common
-    - docker      
+    - docker
+    - application
+    - monitoring   

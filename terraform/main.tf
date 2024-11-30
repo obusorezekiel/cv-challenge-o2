@@ -66,31 +66,31 @@ resource "aws_route53_record" "traefik_routes" {
 }
 
 
-# # Generate Ansible inventory
-# resource "local_file" "ansible_inventory" {
-#   content = templatefile("${path.module}/templates/inventory.tmpl",
-#     {
-#       master_public_ip  = module.ec2_instance.public_ip
-#       master_hostname   = module.ec2_instance.master_hostname
-#     }
-#   )
-#   filename = "../ansible/inventory.ini"
-# }
+# Generate Ansible inventory
+resource "local_file" "ansible_inventory" {
+  content = templatefile("${path.module}/templates/inventory.tmpl",
+    {
+      master_public_ip  = module.ec2_instance.public_ip
+      master_hostname   = module.ec2_instance.master_hostname
+    }
+  )
+  filename = "../ansible/inventory.ini"
+}
 
-# # Run Ansible playbook
-# resource "null_resource" "ansible_provisioner" {
-#   depends_on = [
-#     local_file.ansible_inventory,
-#     module.ec2_instance,
-#     module.vpc
-#   ]
+# Run Ansible playbook
+resource "null_resource" "ansible_provisioner" {
+  depends_on = [
+    local_file.ansible_inventory,
+    module.ec2_instance,
+    module.vpc
+  ]
 
-#   provisioner "local-exec" {
-#     command = <<-EOT
-#       sleep 70 # Reduced wait time since we're using public IPs
-#       ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook \
-#         -i ../ansible/inventory.ini \
-#         ../ansible/site.yml
-#     EOT
-#   }
-# }
+  provisioner "local-exec" {
+    command = <<-EOT
+      sleep 70 # Reduced wait time since we're using public IPs
+      ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook \
+        -i ../ansible/inventory.ini \
+        ../ansible/site.yml
+    EOT
+  }
+}

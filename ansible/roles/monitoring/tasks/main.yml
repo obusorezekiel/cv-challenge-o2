@@ -5,15 +5,39 @@
 
 - name: Copy monitoring Docker Compose file
   template:
-    src: monitoring-compose.yml.j2
+    src: docker-compose-monitoring.yml.j2
     dest: "{{ project_root }}/docker-compose-monitoring.yml"
 
+- name: Copy Prometheus configuration file
+  ansible.builtin.copy:
+    src: prometheus.yml
+    dest: /opt/devops_project/monitoring
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Copy Loki configuration file
+  ansible.builtin.copy:
+    src: loki-config.yml
+    dest: /opt/devops_project/monitoring
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Copy Promtail configuration file
+  ansible.builtin.copy:
+    src: promtail-config.yml
+    dest: /opt/devops_project/monitoring
+    owner: root
+    group: root
+    mode: '0644'
+
 - name: Pull Docker images
-  docker_compose:
-    project_src: "{{ project_root }}"
-    pull: yes
+  ansible.builtin.command:
+    cmd: docker-compose -f docker-compose-monitoring.yml pull
+    chdir: "{{ project_root }}"
 
 - name: Start application services
-  docker_compose:
-    project_src: "{{ project_root }}"
-    state: present
+  ansible.builtin.command:
+    cmd: docker-compose -f docker-compose-monitoring.yml up -d
+    chdir: "{{ project_root }}"
