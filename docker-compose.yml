@@ -102,6 +102,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./letsencrypt:/letsencrypt
       - ./traefik/acme.json:/acme.json
     labels:
       - "traefik.enable=true"
@@ -127,3 +128,4 @@ networks:
   shared_network:
 volumes:
   postgres_data:
+  letsencrypt:

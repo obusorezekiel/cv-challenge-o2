@@ -65,13 +65,6 @@ resource "aws_route53_record" "traefik_routes" {
   records = [module.ec2_instance.public_ip]
 }
 
-resource "aws_route53_record" "www_routes" {
-  zone_id = data.aws_route53_zone.domain.zone_id
-  name    = "www.mytoolings.xyz"
-  type    = "A"
-  ttl     = "300"
-  records = [module.ec2_instance.public_ip]
-}
 
 # # Generate Ansible inventory
 # resource "local_file" "ansible_inventory" {
