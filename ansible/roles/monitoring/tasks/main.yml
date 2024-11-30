@@ -1,0 +1,19 @@
+- name: Create project directory
+  file:
+    path: "{{ project_root }}"
+    state: directory
+
+- name: Copy monitoring Docker Compose file
+  template:
+    src: monitoring-compose.yml.j2
+    dest: "{{ project_root }}/docker-compose-monitoring.yml"
+
+- name: Pull Docker images
+  docker_compose:
+    project_src: "{{ project_root }}"
+    pull: yes
+
+- name: Start application services
+  docker_compose:
+    project_src: "{{ project_root }}"
+    state: present
