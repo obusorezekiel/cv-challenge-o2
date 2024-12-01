@@ -1,5 +1,5 @@
-include:
-  - docker-compose-monitoring.yaml
+# include:
+#   - docker-compose-monitoring.yaml
 services:
   # Application Stack Services
   backend:
