@@ -91,7 +91,7 @@ services:
       - "--providers.docker.exposedByDefault=false"
       - "--api"
       - "--certificatesresolvers.letsencryptresolver.acme.email=obusorezekiel@gmail.com"
-      - "--certificatesresolvers.letsencryptresolver.acme.storage=./traefik/acme.json"
+      - "--certificatesresolvers.letsencryptresolver.acme.storage=/acme.json"
       - "--certificatesresolvers.letsencryptresolver.acme.tlschallenge=true"
       - "--accesslog=true"
       - "--log.level=ERROR"
@@ -102,7 +102,6 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./letsencrypt:/letsencrypt
       - ./traefik/acme.json:/acme.json
     labels:
       - "traefik.enable=true"
@@ -128,4 +127,3 @@ networks:
   shared_network:
 volumes:
   postgres_data:
-  letsencrypt:
