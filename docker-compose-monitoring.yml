@@ -40,7 +40,7 @@ services:
       # HTTP Service
       - traefik.http.services.grafana.loadbalancer.server.port=3000 # important
       # HTTP Router 
-      - traefik.http.routers.grafana-http.rule=((Host(`mytoolings.xyz`) && PathPrefix(`/grafana`))
+      - traefik.http.routers.grafana-http.rule=((Host(`mytoolings.xyz`)  || Host(`www.mytoolings.xyz`)) && PathPrefix(`/grafana`))
       - traefik.http.routers.grafana-http.entrypoints=web
       # HTTP to HTTPS redirect
       - traefik.http.routers.grafana-https.middlewares=www-to-non-www
