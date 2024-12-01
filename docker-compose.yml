@@ -48,8 +48,8 @@ services:
     networks:
       - shared_network
   proxy:
-    image: jc21/nginx-proxy-manager:latest
-    container_name: nginx_proxy_manager
+    image: nginx:latest
+    # container_name: nginx_proxy_manager
     ports:
       - "80:80"
       - "443:443"
