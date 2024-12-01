@@ -8,10 +8,18 @@
     src: docker-compose-monitoring.yml.j2
     dest: "{{ project_root }}/docker-compose-monitoring.yml"
 
+- name: Create the monitoring directory
+  ansible.builtin.file:
+    path: /opt/devops_project/monitoring/
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
 - name: Copy Prometheus configuration file
   ansible.builtin.copy:
     src: prometheus.yml
-    dest: /opt/devops_project/monitoring
+    dest: /opt/devops_project/monitoring/
     owner: root
     group: root
     mode: '0644'
@@ -19,7 +27,7 @@
 - name: Copy Loki configuration file
   ansible.builtin.copy:
     src: loki-config.yml
-    dest: /opt/devops_project/monitoring
+    dest: /opt/devops_project/monitoring/
     owner: root
     group: root
     mode: '0644'
@@ -27,7 +35,7 @@
 - name: Copy Promtail configuration file
   ansible.builtin.copy:
     src: promtail-config.yml
-    dest: /opt/devops_project/monitoring
+    dest: /opt/devops_project/monitoring/
     owner: root
     group: root
     mode: '0644'

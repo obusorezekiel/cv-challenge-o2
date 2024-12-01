@@ -8,7 +8,7 @@ services:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--web.external-url=/prometheus'
     volumes:
-      - /opt/devops_project/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
       - shared_network
     depends_on:
@@ -45,7 +45,7 @@ services:
     ports:
       - 3100:3100
     volumes:
-      - /opt/devops_project/monitoring/loki-config.yml:/etc/loki/loki-config.yaml
+      - ./monitoring/loki-config.yml:/etc/loki/loki-config.yaml
     networks:
       - shared_network
   promtail:
@@ -53,7 +53,7 @@ services:
     networks:
       - shared_network
     volumes:
-      - /opt/devops_project/monitoring/promtail-config.yml:/etc/promtail/promtail-config.yaml
+      - ./monitoring/promtail-config.yml:/etc/promtail/promtail-config.yaml
       - /var/log:/var/log
     depends_on:
       - loki
