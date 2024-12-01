@@ -15,19 +15,19 @@ services:
     depends_on:
       - cadvisor
     labels:
-      - traefik.enable=true
+      - "traefik.enable=true"
       # HTTP Service
-      - traefik.http.services.prometheus.loadbalancer.server.port=9090 # important
+      - "traefik.http.services.prometheus.loadbalancer.server.port=9090" # important
       # HTTP Router ()
-      - traefik.http.routers.prometheus-http.rule=((Host(`mytoolings.xyz`)  || Host(`www.mytoolings.xyz`)) && PathPrefix(`/prometheus`))
-      - traefik.http.routers.prometheus-http.entrypoints=web
+      - "traefik.http.routers.prometheus-http.rule=((Host(`mytoolings.xyz`) && PathPrefix(`/prometheus`))"
+      - "traefik.http.routers.prometheus-http.entrypoints=web"
       # wwww to non-www redirect
-      - traefik.http.routers.prometheus-https.middlewares=www-to-non-www
+      - "traefik.http.routers.prometheus-https.middlewares=www-to-non-www"
       # HTTPS Router
-      - traefik.http.routers.prometheus-https.rule=((Host(`mytoolings.xyz`)  || Host(`www.mytoolings.xyz`)) && PathPrefix(`/prometheus`))
-      - traefik.http.routers.prometheus-https.entrypoints=websecure
-      - traefik.http.routers.prometheus-https.tls.certresolver=letsencryptresolver
-      - traefik.http.routers.prometheus-https.service=prometheus # optional
+      - "traefik.http.routers.prometheus-https.rule=((Host(`mytoolings.xyz`)  || Host(`www.mytoolings.xyz`)) && PathPrefix(`/prometheus`))"
+      - "traefik.http.routers.prometheus-https.entrypoints=websecure"
+      - "traefik.http.routers.prometheus-https.tls.certresolver=letsencryptresolver"
+      - "traefik.http.routers.prometheus-https.service=prometheus" # optional
 
   grafana:
     image: grafana/grafana-oss
@@ -36,19 +36,19 @@ services:
     ports:
       - "3000:3000"
     labels:
-      - traefik.enable=true
+      - t"raefik.enable=true"
       # HTTP Service
-      - traefik.http.services.grafana.loadbalancer.server.port=3000 # important
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000" # important
       # HTTP Router 
-      - traefik.http.routers.grafana-http.rule=((Host(`mytoolings.xyz`)  || Host(`www.mytoolings.xyz`)) && PathPrefix(`/grafana`))
-      - traefik.http.routers.grafana-http.entrypoints=web
+      - "traefik.http.routers.grafana-http.rule=((Host(`mytoolings.xyz`) && PathPrefix(`/grafana`))"
+      - "traefik.http.routers.grafana-http.entrypoints=web"
       # HTTP to HTTPS redirect
-      - traefik.http.routers.grafana-https.middlewares=www-to-non-www
+      - "traefik.http.routers.grafana-https.middlewares=www-to-non-www"
       # HTTPS Router
-      - traefik.http.routers.grafana-https.rule=((Host(`mytoolings.xyz`)  || Host(`www.mytoolings.xyz`)) && PathPrefix(`/grafana`))
-      - traefik.http.routers.grafana-https.entrypoints=websecure
-      - traefik.http.routers.grafana-https.tls.certresolver=letsencryptresolver
-      - traefik.http.routers.grafana-https.service=grafana # optional
+      - "traefik.http.routers.grafana-https.rule=((Host(`mytoolings.xyz`) && PathPrefix(`/grafana`))"
+      - "traefik.http.routers.grafana-https.entrypoints=websecure"
+      - "traefik.http.routers.grafana-https.tls.certresolver=letsencryptresolver"
+      - "traefik.http.routers.grafana-https.service=grafana" # optional
     environment:
       - GF_SERVER_ROOT_URL=http://localhost:3000/grafana
       - GF_SERVER_SERVE_FROM_SUB_PATH=true

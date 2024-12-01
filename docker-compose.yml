@@ -13,13 +13,13 @@ services:
     labels:
       - "traefik.enable=true"
       # HTTP Router
-      - "traefik.http.routers.frontend-http.rule=(Host(`mytoolings.xyz`)  || Host(`www.mytoolings.xyz`))"
+      - "traefik.http.routers.frontend-http.rule=(Host(`mytoolings.xyz`)"
       - "traefik.http.routers.frontend-http.entrypoints=web"
       - "traefik.http.services.frontend.loadbalancer.server.port=5173"
       # www to non-www redirect
       - "traefik.http.routers.frontend-https.middlewares=www-to-non-www"
       # HTTPS Router
-      - "traefik.http.routers.frontend-https.rule=(Host(`mytoolings.xyz`) || Host(`www.mytoolings.xyz`))"
+      - "traefik.http.routers.frontend-https.rule=(Host(`mytoolings.xyz`)"
       - "traefik.http.routers.frontend-https.entrypoints=websecure"
       - "traefik.http.routers.frontend-https.tls.certresolver=letsencryptresolver"
       - "traefik.http.routers.frontend-https.service=frontend" # optional
@@ -35,17 +35,17 @@ services:
     networks:
       - shared_network
     labels:
-      - traefik.enable=true
+      - "traefik.enable=true"
       # HTTP Router
-      - traefik.http.routers.backend-http.rule=((Host(`mytoolings.xyz`)  || Host(`www.mytoolings.xyz`)) && (PathPrefix(`/api`) || PathPrefix(`/redoc`) || PathPrefix(`/docs`)))
-      - traefik.http.routers.backend-http.entrypoints=web
-      - traefik.http.services.backend-http.loadbalancer.server.port=8000
+      - "traefik.http.routers.backend-http.rule=((Host(`mytoolings.xyz`)  || Host(`www.mytoolings.xyz`)) && (PathPrefix(`/api`) || PathPrefix(`/redoc`) || PathPrefix(`/docs`)))"
+      - "traefik.http.routers.backend-http.entrypoints=web"
+      - "traefik.http.services.backend-http.loadbalancer.server.port=8000"
       # www to non-www redirect
       - "traefik.http.routers.backend-https.middlewares=www-to-non-www"
       # HTTPS Router
-      - traefik.http.routers.backend-https.rule=(Host(`mytoolings.xyz`) && (PathPrefix(`/api`) || PathPrefix(`/redoc`) || PathPrefix(`/docs`)))
-      - traefik.http.routers.backend-https.entrypoints=websecure
-      - traefik.http.routers.backend-https.tls.certresolver=letsencryptresolver
+      - "traefik.http.routers.backend-https.rule=(Host(`mytoolings.xyz`) && (PathPrefix(`/api`) || PathPrefix(`/redoc`) || PathPrefix(`/docs`)))"
+      - "traefik.http.routers.backend-https.entrypoints=websecure"
+      - "traefik.http.routers.backend-https.tls.certresolver=letsencryptresolver"
       
     depends_on:
       - db
@@ -65,17 +65,17 @@ services:
     environment:
       ADMINER_DEFAULT_SERVER: db
     labels:
-      - traefik.enable=true
+      - "traefik.enable=true"
       # HTTP Router
-      - traefik.http.routers.adminer-http.rule=Host(`db.mytoolings.xyz`) || Host(`www.db.mytoolings.xyz`)
-      - traefik.http.routers.adminer-http.entrypoints=web
-      - traefik.http.services.adminer.loadbalancer.server.port=8080
+      - "traefik.http.routers.adminer-http.rule=Host(`db.mytoolings.xyz`)"
+      - "traefik.http.routers.adminer-http.entrypoints=web"
+      - "traefik.http.services.adminer.loadbalancer.server.port=8080"
       # www to non-www redirect
       - "traefik.http.routers.adminer-https.middlewares=www-to-non-www"
       # HTTPS Router
-      - traefik.http.routers.adminer-https.rule=Host(`db.mytoolings.xyz`) || Host(`www.db.mytoolings.xyz`)
-      - traefik.http.routers.adminer-https.entrypoints=websecure
-      - traefik.http.routers.adminer-https.tls.certresolver=letsencryptresolver
+      - "traefik.http.routers.adminer-https.rule=Host(`db.mytoolings.xyz`)"
+      - "traefik.http.routers.adminer-https.entrypoints=websecure"
+      - "traefik.http.routers.adminer-https.tls.certresolver=letsencryptresolver"
     networks:
       - shared_network
 
@@ -91,6 +91,7 @@ services:
     - "--providers.docker.exposedByDefault=false"
     - "--api"
     # IMPORTANT: Correct capitalization and ensure this matches exactly
+    - "--certificatesResolvers.letsencryptresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
     - "--certificatesResolvers.letsencryptresolver.acme.email=obusorezekiel@gmail.com"
     - "--certificatesResolvers.letsencryptresolver.acme.storage=/acme.json"
     - "--certificatesResolvers.letsencryptresolver.acme.tlschallenge=true"
@@ -107,7 +108,7 @@ services:
     labels:
       - "traefik.enable=true"
       # HTTP Router
-      - "traefik.http.routers.traefik-http.rule=Host(`traefik.mytoolings.xyz`) || Host(`www.traefik.mytoolings.xyz`)"
+      - "traefik.http.routers.traefik-http.rule=Host(`traefik.mytoolings.xyz`)"
       - "traefik.http.routers.traefik-http.entrypoints=web"
       - "traefik.http.services.traefik-http.loadbalancer.server.port=8080"
       # www to non-www redirect
@@ -117,7 +118,7 @@ services:
       - "traefik.http.middlewares.www-to-non-www.redirectregex.replacement=https://$1"
       - "traefik.http.middlewares.www-to-non-www.redirectregex.permanent=true"
       # HTTPS Router
-      - "traefik.http.routers.traefik-https.rule=Host(`traefik.mytoolings.xyz`) || Host(`www.traefik.mytoolings.xyz`)"
+      - "traefik.http.routers.traefik-https.rule=Host(`traefik.mytoolings.xyz`)"
       - "traefik.http.routers.traefik-https.entrypoints=websecure"
       - "traefik.http.routers.traefik-https.service=api@internal"
       - "traefik.http.routers.traefik-https.tls.certresolver=letsencryptresolver"
