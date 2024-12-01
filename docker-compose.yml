@@ -74,7 +74,7 @@ services:
       - traefik.http.routers.adminer-http.entrypoints=web
       - traefik.http.services.adminer.loadbalancer.server.port=8080
       # www to non-www redirect
-      - "traefik.http.routers.adminer-https.middlewares=www-to-non-www"
+      # - "traefik.http.routers.adminer-https.middlewares=www-to-non-www"
       # HTTPS Router
       - traefik.http.routers.adminer-https.rule=Host(`db.mytoolings.xyz`) || Host(`www.db.mytoolings.xyz`)
       - traefik.http.routers.adminer-https.entrypoints=websecure
@@ -93,6 +93,7 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.exposedByDefault=false"
       - "--api"
+      - "--certificatesresolvers.letsencryptresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
       - "--certificatesresolvers.letsencryptresolver.acme.email=obusorezekiel@gmail.com"
       - "--certificatesresolvers.letsencryptresolver.acme.storage=/acme.json"
       - "--certificatesresolvers.letsencryptresolver.acme.tlschallenge=true"
