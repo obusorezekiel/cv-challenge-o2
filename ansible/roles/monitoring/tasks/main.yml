@@ -4,8 +4,8 @@
     state: directory
 
 - name: Copy monitoring Docker Compose file
-  template:
-    src: docker-compose-monitoring.yml.j2
+  ansible.builtin.copy:
+    src: docker-compose-monitoring.yml
     dest: "{{ project_root }}/docker-compose-monitoring.yml"
 
 - name: Create the monitoring directory
