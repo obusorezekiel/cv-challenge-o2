@@ -54,6 +54,10 @@ services:
       - GF_SERVER_SERVE_FROM_SUB_PATH=true
     volumes:
       - grafana:/var/lib/grafana
+      # - ./monitoring/loki-datasource.yml:/etc/grafana/provisioning/datasources/loki-datasource.yml
+      # - ./monitoring/prometheus-datasource.yml:/etc/grafana/provisioning/datasources/prometheus-datasource.yml
+      # - ./monitoring/dashboard-providers.yml:/etc/grafana/provisioning/dashboards/dashboard-providers.yml
+      # - ./monitoring/dashboards:/var/lib/grafana/dashboards # dashboard json files
     networks:
       - shared_network
     depends_on:

@@ -32,6 +32,22 @@
     group: root
     mode: '0644'
 
+- name: Copy Prometheus datasource file
+  ansible.builtin.copy:
+    src: prometheus-datasource.yml
+    dest: /opt/devops_project/monitoring/
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Copy loki datasource file
+  ansible.builtin.copy:
+    src: loki-datasource.yml
+    dest: /opt/devops_project/monitoring/
+    owner: root
+    group: root
+    mode: '0644'
+
 - name: Copy Promtail configuration file
   ansible.builtin.copy:
     src: promtail-config.yml
@@ -39,6 +55,23 @@
     owner: root
     group: root
     mode: '0644'
+
+- name: Copy Dashboard providers file
+  ansible.builtin.copy:
+    src: dashboard-providers.yml
+    dest: /opt/devops_project/monitoring/
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Copy dashboard directory
+  ansible.builtin.copy:
+    src: dashboards
+    dest: /opt/devops_project/monitoring/
+    owner: root
+    group: root
+    mode: '0755'
+
 
 - name: Pull Docker images
   ansible.builtin.command:

@@ -16,15 +16,3 @@
       - python3-pip
       - software-properties-common
     state: present
-
-- name: Create directory for application
-  file:
-    path: /opt/devops-project
-    state: directory
-    mode: '0755'
-
-- name: Ensure Docker network configuration directory exists
-  file:
-    path: /opt/devops-project/networks
-    state: directory
-    mode: '0755'
